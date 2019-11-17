@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.util.StringUtils;
 
 @SpringBootApplication
 public class CurrencyConverterApplication {
@@ -24,6 +25,7 @@ public class CurrencyConverterApplication {
 
             public void act(String msg) {
             	try {
+            		if(!StringUtils.isEmpty(msg)){
             		String[] split = msg.split(" ");
             		String k = split[0];//key
             		BigDecimal bv = new BigDecimal(split[1]);//value
@@ -46,10 +48,11 @@ public class CurrencyConverterApplication {
             				System.out.println("The Currency is not recorded !");
             			}
             		}
+            		}
 				} catch (Exception e) {
-					System.out.println("ERROR!,The services is stop!");
+					System.out.println("ERROR!,The services is stoped!");
 					System.exit(0);
-					e.printStackTrace();
+//					e.printStackTrace();
 				}
 //                System.out.println("" + msg);
             }
