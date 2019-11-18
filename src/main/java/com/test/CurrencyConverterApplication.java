@@ -28,26 +28,32 @@ public class CurrencyConverterApplication {
             		if(!StringUtils.isEmpty(msg)){
             		String[] split = msg.split(" ");
             		String k = split[0];//key
-            		BigDecimal bv = new BigDecimal(split[1]);//value
             		if(k.length()!=3){// uppercase 3 letter ISO code
             			System.out.println(" The format of data is not right !");
             		}else{
-            			if(init.containsKey(k)){
-            				BigDecimal initv = init.get(k);
-            				BigDecimal add = initv.add(bv);
-            				if(!add.equals(0)){
-            					init.replace(k, add);
+            			if(split.length==2){
+            				String num = split[1];
+            				BigDecimal bv = new BigDecimal(num);//value
+            				if(init.containsKey(k)){
+            					BigDecimal initv = init.get(k);
+            					BigDecimal add = initv.add(bv);
+            					if(!add.equals(0)){
+            						init.replace(k, add);
+            					}else{
+            						init.remove(k);
+            					}
+            				}else if(dbr.containsKey(k)){
+            					if(!bv.equals(0)){
+            						init.put(k, bv);
+            					}
             				}else{
-            					init.remove(k);
-            				}
-            			}else if(dbr.containsKey(k)){
-            				if(!bv.equals(0)){
-            					init.put(k, bv);
+            					System.out.println("The Currency is not recorded !");
             				}
             			}else{
-            				System.out.println("The Currency is not recorded !");
+            				System.out.println("The format of data is not right !");
             			}
             		}
+            		
             		}
 				} catch (Exception e) {
 					System.out.println("ERROR!,The services is stoped!");
